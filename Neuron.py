@@ -1,4 +1,5 @@
 # Importing Excel file
+import numpy
 import sys
 import xlrd
 path = "audit_risk.xlsx"
@@ -15,6 +16,12 @@ for colhead in range(inputSheet.ncols):  # import to list only pre-process attri
     if(colhead == 0 or colhead == 4 or colhead == 4 or colhead == 5 or colhead == 8 or colhead == 11 or colhead == 12 or colhead == 15 or colhead == 18 or colhead == 19 or colhead == 20 or colhead == 21 or colhead == 24 or colhead == 25 or colhead == 28 or colhead == 29 or colhead == 30 or colhead == 31 or colhead == 33 or colhead == 34 or colhead == 36 or colhead == 37 or colhead == 40 or colhead == 41 or colhead == 42 or colhead == 45 or colhead == 46):
         IDXfromAttr.append(colhead)
         attribute.append(inputSheet.cell_value(0, colhead))
+
+
+def signmoidFN(v):
+    e = 2.71828
+    return round(1/(1+pow(e, -v)), 3)
+
 
 x0 = []
 x1 = []
@@ -42,6 +49,9 @@ x22 = []
 x23 = []
 x24 = []
 xResult = []
+err = 1.0
+
+# import xlsx each cell dataset to list
 
 
 for idx, IDXValue in enumerate(IDXfromAttr):
@@ -103,6 +113,162 @@ for idx, IDXValue in enumerate(IDXfromAttr):
             if(idx == 25):
                 xResult.append(inputSheet.cell_value(colrow, IDXValue))
 
+hiddenLayerCount = 1
+InputNodeCount = len(IDXfromAttr)-1
+weightCount = InputNodeCount*(InputNodeCount-1)
+
+w = []  # keep every weight
+
+print('hidden layer = ', hiddenLayerCount)
+print('InputNodeCount = ', InputNodeCount)
+print('weightCount = ', weightCount)
+
+for i in range(weightCount*weightCount):
+    # Generates Weight to list
+    w.append(round(numpy.random.uniform(0.1, 0.5), 1))
+
+bias = -5.0
+v = []
+trainRow = 620
+vi = 0.0
+y = []
+
+newW = [0.0]*25
+
+while (err > 0.02):
+    
+    for rowIDX in range(trainRow):
+        for kIDX in range(InputNodeCount-1):
+            for jIDX in range(InputNodeCount):
+                if(jIDX == 0):
+                    vi += round(w[(jIDX*InputNodeCount-1)+kIDX] +
+                                newW[kIDX]*x0[rowIDX], 3)
+                if(jIDX == 1):
+                    vi += round(w[(jIDX*InputNodeCount-1)+kIDX] +
+                                newW[kIDX]*x1[rowIDX], 3)
+                if(jIDX == 2):
+                    vi += round(w[(jIDX*InputNodeCount-1)+kIDX] +
+                                newW[kIDX]*x2[rowIDX], 3)
+                if(jIDX == 3):
+                    vi += round(w[(jIDX*InputNodeCount-1)+kIDX] +
+                                newW[kIDX]*x3[rowIDX], 3)
+                if(jIDX == 4):
+                    vi += round(w[(jIDX*InputNodeCount-1)+kIDX] +
+                                newW[kIDX]*x4[rowIDX], 3)
+                if(jIDX == 5):
+                    vi += round(w[(jIDX*InputNodeCount-1)+kIDX] +
+                                newW[kIDX]*x5[rowIDX], 3)
+                if(jIDX == 6):
+                    vi += round(w[(jIDX*InputNodeCount-1)+kIDX] +
+                                newW[kIDX]*x6[rowIDX], 3)
+                if(jIDX == 7):
+                    vi += round(w[(jIDX*InputNodeCount-1)+kIDX] +
+                                newW[kIDX]*x7[rowIDX], 3)
+                if(jIDX == 8):
+                    vi += round(w[(jIDX*InputNodeCount-1)+kIDX] +
+                                newW[kIDX]*x8[rowIDX], 3)
+                if(jIDX == 9):
+                    vi += round(w[(jIDX*InputNodeCount-1)+kIDX] +
+                                newW[kIDX]*x9[rowIDX], 3)
+                if(jIDX == 10):
+                    vi += round(w[(jIDX*InputNodeCount-1)+kIDX] +
+                                newW[kIDX]*x10[rowIDX], 3)
+                if(jIDX == 11):
+                    vi += round(w[(jIDX*InputNodeCount-1)+kIDX] +
+                                newW[kIDX]*x11[rowIDX], 3)
+                if(jIDX == 12):
+                    vi += round(w[(jIDX*InputNodeCount-1)+kIDX] +
+                                newW[kIDX]*x12[rowIDX], 3)
+                if(jIDX == 13):
+                    vi += round(w[(jIDX*InputNodeCount-1)+kIDX] +
+                                newW[kIDX]*x13[rowIDX], 3)
+                if(jIDX == 14):
+                    vi += round(w[(jIDX*InputNodeCount-1)+kIDX] +
+                                newW[kIDX]*x14[rowIDX], 3)
+                if(jIDX == 15):
+                    vi += round(w[(jIDX*InputNodeCount-1)+kIDX] +
+                                newW[kIDX]*x15[rowIDX], 3)
+                if(jIDX == 16):
+                    vi += round(w[(jIDX*InputNodeCount-1)+kIDX] +
+                                newW[kIDX]*x16[rowIDX], 3)
+                if(jIDX == 17):
+                    vi += round(w[(jIDX*InputNodeCount-1)+kIDX] +
+                                newW[kIDX]*x17[rowIDX], 3)
+                if(jIDX == 18):
+                    vi += round(w[(jIDX*InputNodeCount-1)+kIDX] +
+                                newW[kIDX]*x18[rowIDX], 3)
+                if(jIDX == 19):
+                    vi += round(w[(jIDX*InputNodeCount-1)+kIDX] +
+                                newW[kIDX]*x19[rowIDX], 3)
+                if(jIDX == 20):
+                    vi += round(w[(jIDX*InputNodeCount-1)+kIDX] +
+                                newW[kIDX]*x20[rowIDX], 3)
+                if(jIDX == 21):
+                    vi += round(w[(jIDX*InputNodeCount-1)+kIDX] +
+                                newW[kIDX]*x21[rowIDX], 3)
+                if(jIDX == 22):
+                    vi += round(w[(jIDX*InputNodeCount-1)+kIDX] +
+                                newW[kIDX]*x22[rowIDX], 3)
+                if(jIDX == 23):
+                    vi += round(w[(jIDX*InputNodeCount-1)+kIDX] +
+                                newW[kIDX]*x23[rowIDX], 3)
+                if(jIDX == 24):
+                    vi += round(w[(jIDX*InputNodeCount-1)+kIDX] +
+                                newW[kIDX]*x24[rowIDX], 3)
+
+            v.append(round(vi+bias, 3))
+            vi = 0.0
+        break
+
+
+    print('v = ', v)
+    print(len(v))
+
+
+    for vItem in v:
+        y.append(round(signmoidFN(vItem), 3))
+    print('y = ', y)
+
+
+    outputLayer = []
+
+
+    for i in range(len(y)):
+        # Generates Weight to list
+        w.append(round(numpy.random.uniform(0.1, 0.5), 1))
+
+    vi = 0
+
+    for i in range(len(y)):
+        vi = y[i]*w[weightCount*weightCount+i]
+        vi += bias
+        outputLayer.append(signmoidFN(vi))
+
+    print('outputLayer = ', outputLayer)
+
+
+    err = xResult[0] - outputLayer[0]
+
+    print('err = ', err)
+
+
+    def grad(err, y):
+        return err * y * (1-y)
+
+
+    newW.clear()
+
+    wii = 0.0
+    learnR = -0.925
+
+
+    for i in range(len(y)):
+        wii = (-1*learnR)*grad(err, y[i])*w[weightCount*weightCount+i]
+        newW.append(round(wii, 5))
+        wii = 0.0
+
+print(newW)
+print(len(newW))
 # print('******************************',
 #       attribute[0], '******************************')
 # print(x0)
@@ -138,24 +304,20 @@ for idx, IDXValue in enumerate(IDXfromAttr):
 # print(x6)
 # print(len(x6))
 
-
 # print('******************************',
 #       attribute[7], '******************************')
 # print(x7)
 # print(len(x7))
-
 
 # print('******************************',
 #       attribute[8], '******************************')
 # print(x8)
 # print(len(x8))
 
-
 # print('******************************',
 #       attribute[9], '******************************')
 # print(x9)
 # print(len(x9))
-
 
 # print('******************************',
 #       attribute[10], '******************************')
